@@ -1,0 +1,108 @@
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s ease-in-out;
+}
+.modal.show, .backdrop.show {
+    opacity: 1;
+    visibility: visible;
+}
+.backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s ease-in-out;
+}
+.modalDialog {
+    max-width: 570px;
+    margin: 100px auto;
+}
+.modalContent {
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    z-index: 20;
+}
+.modalBody {
+    padding: 2rem;
+    background-color: #fff;
+}
+.modalHeading {
+    font-size: 20px;
+    line-height: 1;
+    margin: 0px;
+    letter-spacing: -0.32px;
+    color: #030712;
+    margin-bottom: 10px;
+}
+.modalText {
+    font-size: 12px;
+    line-height: 15px;
+    margin: 0px;
+    margin-bottom: 20px;
+    color: #aaa;
+}
+.locationRow {
+    display: flex;
+    flex-wrap: wrap;
+    border-left: 1px solid #E5E7EB;
+    border-bottom: 1px solid #E5E7EB;
+}
+.locationCol {
+    flex: 0 0 auto;
+    width: 20%;
+    max-width: 100%;
+    border-right: 1px solid #E5E7EB;
+    border-top: 1px solid #E5E7EB;
+}
+.locationBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #030712;
+    width: 100%;
+    background-color: #F3F4F6;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 12px 0;
+}
+.locationBtn i {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.locationBtn i img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+@media only screen and (max-width: 600px) {
+    .modalDialog {
+        max-width: 300px;
+    }
+    .modalBody {
+        padding: 15px;
+    }
+    .locationCol {
+        width: 50%;
+    }
+}

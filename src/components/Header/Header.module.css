@@ -1,0 +1,347 @@
+.headerWrapper {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+.headerTopTag {
+    background-color: #634C9F;
+    min-height: 41px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+}
+.topTagText {
+    font-weight: 600;
+    color: #ffffff;
+    font-size: 12px;
+    letter-spacing: -0.32px;
+    margin: 0;
+    text-align: center;
+}
+.headerTop {
+    border-bottom: 1px solid #E5E7EB;
+}
+.headerContainer {
+    max-width: 1400px;
+    padding: 0 20px;
+    margin: 0 auto;
+}
+.topRow {
+    padding: 10px 0;
+}
+.topRow, .topCol {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.topCol {
+    justify-content: flex-start;
+}
+.topMenu {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.menuLink {
+    font-size: 12px;
+    line-height: 15px;
+    color: #6B7280;
+    font-weight: 500;
+    letter-spacing: -0.32px;
+    text-decoration: none;
+    transition: 0.3s ease-in;
+}
+.menuLink:hover {
+    color: #634C9F;
+}
+.deliveryTag {
+    margin-left: 14px;
+    padding-left: 14px;
+    border-left: 1px solid #E5E7EB;
+}
+.deliveryText {
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.32px;
+    color: #6B7280;
+    margin: 0px;
+}
+.deliveryText span {
+    font-weight: 700;
+    color: #EA580C;
+}
+.headerNav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 4px 0;
+}
+.brandCol {
+    margin-right: 21px;
+}
+.navBrand {
+    display: block;
+    width: 154px;
+}
+.navBrand img {
+    max-width: 100%;
+}
+.locationCol {
+    margin-right: 12px;
+}
+.locationBtn {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+.locationBtn i {
+    display: inline-block;
+    margin-right: 20px;
+}
+.locationContent {
+    flex: 1;
+    display: inline-block;
+    text-align: left;
+}
+.locationText1, .accountText1 {
+    font-style: normal;
+    font-size: 11px;
+    line-height: 13.2px;
+    color: #030712;
+    letter-spacing: -0.32px;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    display: block;
+}
+.locationText2, .accountText2 {
+    display: block;
+    font-size: 13px;
+    line-height: 15.6px;
+    letter-spacing: -0.32px;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    color: #030712;
+}
+.searchCol {
+    flex-grow: 1;
+}
+.searchWrapper {
+    position: relative;
+    padding: 12px;
+    background-color: #ffffff;
+    z-index: 100;
+    border-radius: 8px 8px 0 0;
+}
+.searchInput {
+    width: 100%;
+    height: 46px;
+    padding-left: 18px;
+    padding-right: 65px;
+    background-color: #F3F4F6;
+    border: none;
+    outline: none;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    color: #6B7280;
+    letter-spacing: -0.28px;
+    border-radius: 8px;
+}
+.searchBtn {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    position: absolute;
+    top: 21px;
+    right: 22px;
+}
+.accountCol {
+    margin-left: 18px;
+    margin-right: 14px;
+}
+.accountBtn {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #030712;
+}
+.accountBtn i {
+    margin-right: 20px;
+    margin-top: 3px;
+}
+.accountContent {
+    flex: 1;
+    display: inline-block;
+    text-align: left;
+}
+.rightCol {
+    margin-left: 14px;
+}
+.rightColMenu {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    gap: 20px;
+    list-style-type: none;
+}
+.rightColMenuLink {
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+}
+.linkCount {
+    position: absolute;
+    display: inline-flex;
+    width: 17px;
+    height: 17px;
+    font-size: 10px;
+    letter-spacing: -0.32px;
+    font-weight: 600;
+    background-color: #DC2626;
+    color: #FEF2F2;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    top: -7px;
+    right: -6px;
+}
+.searchBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.4s ease-in-out;
+}
+.searchBackdrop.show {
+    opacity: 1;
+    visibility: visible;
+}
+.navToogler {
+    display: none;
+}
+.mobileNav {
+    position: fixed;
+    top: 0;
+    left: -310px;
+    width: 310px;
+    height: 100%;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    transition: 0.3s ease-in-out;
+}
+.mobileNavLocation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px 20px;
+}
+.navHeader {
+    display: flex;
+    justify-content: flex-end;
+    padding: 12px 20px;
+}
+.locationWrapper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.locationChangeBtn {
+    padding: 0px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #634C9F;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+}
+.closeBtn {
+    padding: 0;
+    border: none;
+    background-color: #e1e4eb;
+    color: #030712;
+    border-radius: 100%;
+    display: inline-flex;
+    width: 22px;
+    height: 22px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.mobileNav.show {
+    left: -310px;
+}
+.mobileNavBody {
+    flex-grow: 1;
+    padding: 12px 20px;
+    overflow: auto;
+}
+.mobileNavHeading {
+    color: #9ca3af;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-top: 24px;
+    margin-bottom: 5px;
+}
+.mobileMenu {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+.mobileAccount {
+    padding: 12px 20px;
+}
+@media only screen and (max-width: 991px) {
+    .headerTop {
+        display: none;
+    }
+    .navToogler {
+        display: inline-flex;
+        width: 36px;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+    }
+    .bar {
+        background-color: #634C9F;
+        display: block;
+        width: 100%;
+        height: 3px;
+        border-radius: 60px;
+    }
+    .searchCol, .accountCol, .locationCol {
+        display: none;
+    }
+    .headerNav {
+        justify-content: space-between;
+    }
+    .mobileNav.show {
+        left: 0;
+    }
+    .wishlist {
+        display: none;
+    }
+    .brandCol {
+        margin: 0;
+    }
+}
+@media only screen and (max-width: 400px) {
+    .navBrand {
+        width: 120px;
+    }
+}
