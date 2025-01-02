@@ -81,6 +81,10 @@
     outline: none;
     cursor: pointer;
     padding: 12px 0;
+    transition: 0.3s ease-in-out;
+}
+.locationBtn:hover {
+    background-color: #fff;
 }
 .locationBtn i {
     display: inline-block;

@@ -16,6 +16,8 @@ const Header = () => {
     useEffect(() => {
         if (window.localStorage.getItem("location")) {
             setLocation(window.localStorage.getItem("location"));
+        } else {
+            setShowModal(true);
         }
     }, [])
     return (

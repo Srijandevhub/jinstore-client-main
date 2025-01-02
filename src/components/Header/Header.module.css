@@ -175,6 +175,7 @@
 .accountBtn i {
     margin-right: 20px;
     margin-top: 3px;
+    transition: 0.4s ease-in-out;
 }
 .accountContent {
     flex: 1;
@@ -222,6 +223,7 @@
     opacity: 0;
     visibility: hidden;
     transition: 0.4s ease-in-out;
+    z-index: 10;
 }
 .searchBackdrop.show {
     opacity: 1;
@@ -240,6 +242,7 @@
     display: flex;
     flex-direction: column;
     transition: 0.3s ease-in-out;
+    z-index: 1000;
 }
 .mobileNavLocation {
     display: flex;
