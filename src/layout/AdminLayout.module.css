@@ -1,0 +1,11 @@
+.main {
+    padding-top: 96px;
+    padding-left: 0;
+    min-height: 100vh;
+    transition: 0.3s ease-in-out;
+    overflow: auto;
+    background-color: #f1f7f5;
+}
+.main.collapsed {
+    padding-left: 300px;
+}

@@ -3,15 +3,28 @@ import styles from './Header.module.css'
 import Logo from '../../assets/logo.png'
 import { useEffect, useState } from 'react'
 import LocationModal from '../LocationModal/LocationModal'
+import { useSelector } from 'react-redux'
 const Header = () => {
     const [backdrop, setBackdrop] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [mobileNav, setMobileNav] = useState(false);
     const [location, setLocation] = useState("all");
+    const [fixed, setFixed] = useState(false);
+
+    const cart = useSelector((state) => state.cart.data);
+    const wishlist = useSelector((state) => state.wishlist.data);
+
     const handleLocationChange = (value) => {
         setLocation(value);
         setShowModal(false);
         window.localStorage.setItem("location", value);
+    }
+    const handleScroll = () => {
+        if (window.scrollY > 861) {
+            setFixed(true);
+        } else {
+            setFixed(false);
+        }
     }
     useEffect(() => {
         if (window.localStorage.getItem("location")) {
@@ -19,9 +32,12 @@ const Header = () => {
         } else {
             setShowModal(true);
         }
+
+        document.addEventListener("scroll", handleScroll);
+        return () => document.removeEventListener("scroll", handleScroll);
     }, [])
     return (
-        <header className={styles.headerWrapper}>
+        <header className={`${styles.headerWrapper} ${fixed ? `${styles.fixed}` : ''}`}>
             <div className={styles.headerTopTag}>
                 <p className={styles.topTagText}>FREE delivery & 40% Discount for next 3 orders! Place your 1st order in.</p>
             </div>
@@ -107,7 +123,7 @@ const Header = () => {
                                     <svg width="24" height="21" viewBox="0 0 24 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M6.66016 2.40801C5.88016 2.40801 5.15649 2.60301 4.48916 2.99301C3.82182 3.38301 3.29316 3.91168 2.90316 4.57901C2.51316 5.24634 2.31816 5.97001 2.31816 6.75001C2.31816 8.53534 2.82949 10.234 3.85216 11.846C4.68416 13.198 5.84549 14.4633 7.33616 15.642C8.67082 16.734 10.2048 17.696 11.9382 18.528L12.0682 18.58C13.8535 17.7307 15.4482 16.7427 16.8522 15.616L16.8002 15.642C18.2908 14.4633 19.4522 13.198 20.2842 11.846C21.3068 10.234 21.8182 8.53534 21.8182 6.75001C21.8182 5.97001 21.6232 5.24634 21.2332 4.57901C20.8432 3.91168 20.3145 3.38301 19.6472 2.99301C18.9798 2.60301 18.2562 2.40801 17.4762 2.40801C16.7828 2.40801 16.1285 2.55968 15.5132 2.86301C14.8978 3.16634 14.3778 3.58234 13.9532 4.11101C13.5285 4.63968 13.2555 5.23334 13.1342 5.89201C13.0822 6.13468 12.9565 6.33834 12.7572 6.50301C12.5578 6.66768 12.3282 6.75001 12.0682 6.75001C11.8082 6.75001 11.5785 6.66768 11.3792 6.50301C11.1798 6.33834 11.0542 6.13468 11.0022 5.89201C10.8808 5.23334 10.6078 4.63968 10.1832 4.11101C9.75849 3.58234 9.23849 3.16634 8.62316 2.86301C8.00782 2.55968 7.35349 2.40801 6.66016 2.40801ZM12.0682 20.842C11.9122 20.8247 11.7562 20.79 11.6002 20.738C11.5135 20.7033 11.3662 20.634 11.1582 20.53C9.25149 19.6287 7.50949 18.5453 5.93216 17.28L5.98416 17.332C4.30282 16.0147 2.97682 14.576 2.00616 13.016C0.77549 11.04 0.160156 8.95134 0.160156 6.75001C0.160156 5.57134 0.45049 4.48368 1.03116 3.48701C1.61182 2.49034 2.40049 1.70168 3.39716 1.12101C4.39382 0.540344 5.48149 0.25001 6.66016 0.25001C7.75216 0.25001 8.77049 0.497009 9.71516 0.991011C10.6598 1.48501 11.4442 2.15668 12.0682 3.00601V3.03201C12.6922 2.16534 13.4765 1.48501 14.4212 0.991011C15.3658 0.497009 16.3842 0.25001 17.4762 0.25001C18.6548 0.25001 19.7425 0.540344 20.7392 1.12101C21.7358 1.70168 22.5245 2.49034 23.1052 3.48701C23.6858 4.48368 23.9762 5.57134 23.9762 6.75001C23.9762 8.95134 23.3608 11.04 22.1302 13.016C21.1595 14.576 19.8335 16.0147 18.1522 17.332C16.6095 18.5453 14.9368 19.594 13.1342 20.478L12.9782 20.53C12.5622 20.738 12.2588 20.842 12.0682 20.842Z" fill="#030712"/>
                                     </svg>
-                                    <span className={styles.linkCount}>0</span>
+                                    <span className={styles.linkCount}>{wishlist.length}</span>
                                 </Link>
                             </li>
                             <li>
@@ -115,7 +131,7 @@ const Header = () => {
                                     <svg width="25" height="20" viewBox="0 0 25 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M22.1822 0.25H1.07016C0.810156 0.284666 0.59349 0.406 0.420156 0.614C0.246823 0.822001 0.160156 1.056 0.160156 1.316C0.160156 1.576 0.246823 1.81433 0.420156 2.031C0.59349 2.24767 0.810156 2.37333 1.07016 2.408H5.25616L4.50216 12.002V12.184C4.50216 12.7733 4.71449 13.2803 5.13916 13.705C5.56382 14.1297 6.07082 14.342 6.66016 14.342H19.9462C20.4662 14.342 20.9212 14.1817 21.3112 13.861C21.7012 13.5403 21.9482 13.146 22.0522 12.678L24.2882 2.902C24.3228 2.694 24.3402 2.52933 24.3402 2.408C24.3402 1.80133 24.1322 1.29 23.7162 0.874001C23.3002 0.458 22.7888 0.25 22.1822 0.25ZM19.9462 12.158H6.66016L7.41416 2.408H22.1822L19.9462 12.158ZM8.66216 19.75C9.26882 19.75 9.78449 19.5377 10.2092 19.113C10.6338 18.6883 10.8462 18.1727 10.8462 17.566C10.8462 16.9593 10.6338 16.448 10.2092 16.032C9.78449 15.616 9.26882 15.408 8.66216 15.408C8.07282 15.408 7.56582 15.616 7.14116 16.032C6.71649 16.448 6.50416 16.9593 6.50416 17.566C6.50416 18.1727 6.71649 18.6883 7.14116 19.113C7.56582 19.5377 8.07282 19.75 8.66216 19.75ZM18.4122 19.75C19.0188 19.75 19.5345 19.5377 19.9592 19.113C20.3838 18.6883 20.5962 18.1727 20.5962 17.566C20.5962 16.9593 20.3838 16.448 19.9592 16.032C19.5345 15.616 19.0188 15.408 18.4122 15.408C17.8228 15.408 17.3158 15.616 16.8912 16.032C16.4665 16.448 16.2542 16.9593 16.2542 17.566C16.2542 18.1727 16.4665 18.6883 16.8912 19.113C17.3158 19.5377 17.8228 19.75 18.4122 19.75Z" fill="#030712"/>
                                     </svg>
-                                    <span className={styles.linkCount}>0</span>
+                                    <span className={styles.linkCount}>{cart.length}</span>
                                 </Link>
                             </li>
                         </ul>
@@ -192,6 +208,30 @@ const Header = () => {
                         </li>
                     </ul>
                     <h4 className={styles.mobileNavHeading}>Contact Details</h4>
+                    <ul className={styles.widgetMedia}>
+                        <li>
+                            <i>
+                                <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18.427 14.768 17.2 13.542a1.733 1.733 0 0 0-2.45 0l-.613.613a1.732 1.732 0 0 1-2.45 0l-1.838-1.84a1.735 1.735 0 0 1 0-2.452l.612-.613a1.735 1.735 0 0 0 0-2.452L9.237 5.572a1.6 1.6 0 0 0-2.45 0c-3.223 3.2-1.702 6.896 1.519 10.117 3.22 3.221 6.914 4.745 10.12 1.535a1.601 1.601 0 0 0 0-2.456Z"/>
+                                </svg>
+                            </i>
+                            <div className={styles.contactDetails}>
+                                <span>Monday-Friday: 08am-9pm</span><br/>
+                                <Link to="tel:0800300353">0 800 300-353</Link>
+                            </div>
+                        </li>
+                        <li>
+                            <i>
+                                <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="m3.5 5.5 7.893 6.036a1 1 0 0 0 1.214 0L20.5 5.5M4 19h16a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z"/>
+                                </svg>
+                            </i>
+                            <div className={styles.contactDetails}>
+                                <span>Need help with your order?</span><br/>
+                                <Link to="mailto:info@grogin.com">info@grogin.com</Link>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
                 <div className={styles.mobileAccount}>
                     <Link to="/signin" className={styles.accountBtn}>

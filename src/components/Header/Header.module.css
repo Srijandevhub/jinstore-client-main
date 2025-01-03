@@ -3,6 +3,12 @@
     top: 0;
     left: 0;
     width: 100%;
+    background-color: #fff;
+    transition: 0.3s ease-in-out;
+}
+.headerWrapper.fixed {
+    position: fixed;
+    z-index: 3;
 }
 .headerTopTag {
     background-color: #634C9F;
@@ -11,6 +17,9 @@
     align-items: center;
     justify-content: center;
     padding: 2px;
+}
+.headerWrapper.fixed .headerTopTag {
+    display: none;
 }
 .topTagText {
     font-weight: 600;
@@ -22,6 +31,9 @@
 }
 .headerTop {
     border-bottom: 1px solid #E5E7EB;
+}
+.headerWrapper.fixed .headerTop {
+    display: none;
 }
 .headerContainer {
     max-width: 1400px;
@@ -305,6 +317,34 @@
 }
 .mobileAccount {
     padding: 12px 20px;
+}
+.widgetMedia li {
+    display: flex;
+    align-items: center;
+}
+.widgetMedia li i {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    margin-right: 20px;
+}
+.widgetMedia .contactDetails {
+    flex: 1;
+}
+.widgetMedia .contactDetails span {
+    font-size: 0.75rem;
+    opacity: 0.6;
+}
+.contactDetails a {
+    color: #111827;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+.widgetMedia {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
 }
 @media only screen and (max-width: 991px) {
     .headerTop {
