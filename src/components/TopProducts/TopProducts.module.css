@@ -1,0 +1,112 @@
+.wrapper {
+    padding-top: 60px;
+}
+.container {
+    max-width: 1400px;
+    padding: 0 20px;
+    margin: 0 auto;
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    border-top: 1px solid #E5E7EB;
+    border-left: 1px solid #E5E7EB;
+    border-bottom: 1px solid #E5E7EB;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.col1 {
+    flex: 0 0 auto;
+    max-width: 100%;
+    width: 18.39%;
+}
+.col2 {
+    flex: 0 0 auto;
+    max-width: 100%;
+    width: 31.61%;
+}
+.productBox1 {
+    background-color: #fff;
+    border-right: 1px solid #E5E7EB;
+}
+.productBoxHeader {
+    padding: 25px 25px 21px 25px;
+}
+.productBoxHeaderInner {
+    position: relative;
+}
+.productImage {
+    max-width: 100%;
+    height: 199px;
+    object-fit: cover;
+}
+.discount {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-flex;
+    background-color: #DC2626;
+    min-height: 24px;
+    min-width: 39px;
+    border-radius: 60px;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #fff;
+    font-weight: 800;
+}
+.wishlistBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    z-index: 3;
+}
+.organic {
+    display: inline-flex;
+    background: linear-gradient(to right, #D4FC79 0%, #96E6A1 50%);
+    align-items: center;
+    justify-content: center;
+    min-height: 24px;
+    min-width: 81px;
+    border-radius: 60px;
+    gap: 5px;
+    font-size: 10px;
+    color: #166534;
+    font-weight: 800;
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+}
+.cartBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: #634C9F;
+    border-radius: 100%;
+    border: none;
+    outline: none;
+    position: absolute;
+    bottom: -13px;
+    right: 0;
+    z-index: 3;
+    cursor: pointer;
+}
+.blankLink {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
