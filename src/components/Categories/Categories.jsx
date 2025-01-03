@@ -12,7 +12,31 @@ const Categories = () => {
         <div className={styles.categoryWrapper}>
             <div className={styles.categoryContainer}>
                 <Swiper breakpoints={{
-                    1600: {
+                    300: {
+                        slidesPerView: 2,
+                        spaceBetween: 15
+                    },
+                    500: {
+                        slidesPerView: 3,
+                        spaceBetween: 15
+                    },
+                    700: {
+                        slidesPerView: 4,
+                        spaceBetween: 15
+                    },
+                    900: {
+                        slidesPerView: 6,
+                        spaceBetween: 15
+                    },
+                    1000: {
+                        slidesPerView: 7,
+                        spaceBetween: 20
+                    },
+                    1200: {
+                        slidesPerView: 8,
+                        spaceBetween: 20
+                    },
+                    1400: {
                         slidesPerView: 9,
                         spaceBetween: 30
                     }
