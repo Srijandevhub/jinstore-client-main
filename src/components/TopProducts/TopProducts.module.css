@@ -110,3 +110,35 @@
     height: 100%;
     z-index: 2;
 }
+.productBody {
+    padding: 0 15px 15px;
+}
+.productName {
+    font-size: 14px;
+    line-height: 18.2px;
+    letter-spacing: -0.28px;
+    font-weight: 500;
+}
+.productName a {
+    color: #030712;
+    text-decoration: none;
+}
+.priceSec {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.priceMain {
+    font-size: 22px;
+    font-weight: 700;
+    color: #DC2626;
+    letter-spacing: -0.44px;
+    line-height: 22px;
+}
+.priceNot {
+    text-decoration: line-through;
+    font-size: 16px;
+    line-height: 16px;
+    font-weight: 500;
+    color: #111827;
+}
