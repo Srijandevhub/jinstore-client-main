@@ -2,12 +2,10 @@ import styles from './CategoryProducts.module.css'
 import ban1 from '../../assets/catban.jpg'
 import ban2 from '../../assets/catban2.jpg'
 import { Link } from 'react-router-dom'
-import Headings from '../Headings/Headings'
 const CategoryProducts = () => {
     return (
         <div className={styles.wrapper}>
             <div className={styles.container}>
-                <Headings heading={"Category Products"} subheading={"Do not miss the current offers until the end of March."} link='/shop'/>
                 <div className={styles.row}>
                     <div className={styles.col}>
                         <div className={styles.box} style={{ backgroundImage: `url(${ban1})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', borderTopLeftRadius: "8px" }}>

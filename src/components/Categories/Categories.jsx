@@ -4,10 +4,44 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 
-import Cat1 from '../../assets/Fruits.png'
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Flip, toast } from 'react-toastify';
+import axios from 'axios';
 
 const Categories = () => {
+    const [categories, setCategories] = useState([]);
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const res = await axios.get("http://localhost:5000/api/v1/category/get-categories");
+                if (res.status === 200) {
+                    setCategories(res.data.categories);
+                }
+            } catch (error) {
+                if (error.response.status === 400) {
+                    toast.warning(error.response.data.message, {
+                        position: 'top-right',
+                        transition: Flip,
+                        autoClose: 3000,
+                        pauseOnHover: false,
+                        progress: false,
+                        hideProgressBar: true
+                    });
+                } else {
+                    toast.error(error.response.data.message, {
+                        position: 'top-right',
+                        transition: Flip,
+                        autoClose: 3000,
+                        pauseOnHover: false,
+                        progress: false,
+                        hideProgressBar: true
+                    });
+                }
+            }
+        }
+        fetchCategories();
+    }, [])
     return (
         <div className={styles.categoryWrapper}>
             <div className={styles.categoryContainer}>
@@ -17,76 +51,19 @@ const Categories = () => {
                         spaceBetween: 30
                     }
                 }}>
-                    <SwiperSlide>
-                        <div className={styles.categoryBox}>
-                            <img src={Cat1} className={styles.categoryImage} alt="category"/>
-                            <h4 className={styles.cartegoryTitle}>Fruits & Vegetables</h4>
-                            <Link className={styles.categoryLink} to="/shop"></Link>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={styles.categoryBox}>
-                            <img src={Cat1} className={styles.categoryImage} alt="category"/>
-                            <h4 className={styles.cartegoryTitle}>Fruits & Vegetables</h4>
-                            <Link className={styles.categoryLink} to="/shop"></Link>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={styles.categoryBox}>
-                            <img src={Cat1} className={styles.categoryImage} alt="category"/>
-                            <h4 className={styles.cartegoryTitle}>Fruits & Vegetables</h4>
-                            <Link className={styles.categoryLink} to="/shop"></Link>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={styles.categoryBox}>
-                            <img src={Cat1} className={styles.categoryImage} alt="category"/>
-                            <h4 className={styles.cartegoryTitle}>Fruits & Vegetables</h4>
-                            <Link className={styles.categoryLink} to="/shop"></Link>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={styles.categoryBox}>
-                            <img src={Cat1} className={styles.categoryImage} alt="category"/>
-                            <h4 className={styles.cartegoryTitle}>Fruits & Vegetables</h4>
-                            <Link className={styles.categoryLink} to="/shop"></Link>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={styles.categoryBox}>
-                            <img src={Cat1} className={styles.categoryImage} alt="category"/>
-                            <h4 className={styles.cartegoryTitle}>Fruits & Vegetables</h4>
-                            <Link className={styles.categoryLink} to="/shop"></Link>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={styles.categoryBox}>
-                            <img src={Cat1} className={styles.categoryImage} alt="category"/>
-                            <h4 className={styles.cartegoryTitle}>Fruits & Vegetables</h4>
-                            <Link className={styles.categoryLink} to="/shop"></Link>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={styles.categoryBox}>
-                            <img src={Cat1} className={styles.categoryImage} alt="category"/>
-                            <h4 className={styles.cartegoryTitle}>Fruits & Vegetables</h4>
-                            <Link className={styles.categoryLink} to="/shop"></Link>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={styles.categoryBox}>
-                            <img src={Cat1} className={styles.categoryImage} alt="category"/>
-                            <h4 className={styles.cartegoryTitle}>Fruits & Vegetables</h4>
-                            <Link className={styles.categoryLink} to="/shop"></Link>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className={styles.categoryBox}>
-                            <img src={Cat1} className={styles.categoryImage} alt="category"/>
-                            <h4 className={styles.cartegoryTitle}>Fruits & Vegetables</h4>
-                            <Link className={styles.categoryLink} to="/shop"></Link>
-                        </div>
-                    </SwiperSlide>
+                    {
+                        categories.map((item, index) => {
+                            return (
+                                <SwiperSlide key={index}>
+                                    <div className={styles.categoryBox}>
+                                        <img src={`http://localhost:5000/uploads/categories/${item.thumbnail}`} className={styles.categoryImage} alt="category"/>
+                                        <h4 className={styles.cartegoryTitle}>{item.title}</h4>
+                                        <Link className={styles.categoryLink} to={`/shop?cat=${item._id}`}></Link>
+                                    </div>
+                                </SwiperSlide>
+                            )
+                        })
+                    }
                 </Swiper>
             </div>
         </div>

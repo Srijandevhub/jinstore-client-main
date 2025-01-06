@@ -1,6 +1,8 @@
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './styles.css'
+import './grid.css'
+import './buttons.css'
 import { Provider } from 'react-redux'
 import store from './utils/store.js'
 import { ToastContainer } from 'react-toastify'

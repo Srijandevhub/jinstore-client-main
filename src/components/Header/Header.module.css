@@ -8,7 +8,7 @@
 }
 .headerWrapper.fixed {
     position: fixed;
-    z-index: 10;
+    z-index: 3;
 }
 .headerTopTag {
     background-color: #634C9F;
@@ -139,7 +139,7 @@
     line-height: 15.6px;
     letter-spacing: -0.32px;
     font-family: "Inter", sans-serif;
-    font-weight: 500;
+    font-weight: 600;
     color: #030712;
 }
 .searchCol {
@@ -183,6 +183,46 @@
     align-items: center;
     text-decoration: none;
     color: #030712;
+    position: relative;
+    cursor: pointer;
+}
+.accountDropdown {
+    position: absolute;
+    top: 191%;
+    right: 0;
+    background-color: #fff;
+    z-index: 10;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 10px rgba(0,0,0,0.08);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.4s ease-in-out;
+}
+.accountLink {
+    display: flex;
+    width: 100%;
+    padding: 5px 0;
+    background-color: transparent;
+    color: #111827;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+}
+.accountLink:hover {
+    color: #634C9F;
+}
+.accountBtn:hover .accountDropdown {
+    opacity: 1;
+    visibility: visible;
 }
 .accountBtn i {
     margin-right: 20px;

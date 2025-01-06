@@ -5,6 +5,7 @@ import SigninPage from "./pages/SigninPage"
 import SignupPage from "./pages/SignupPage"
 import AdminDashboard from "./pages/AdminDashboard"
 import AccessForbidden from "./pages/AccessForbidden"
+import AdminCategories from "./pages/AdminCategories"
 
 const App = () => {
     return (
@@ -14,6 +15,7 @@ const App = () => {
                 <Route path="/signin" element={<SigninPage />}/>
                 <Route path="/signup" element={<SignupPage />}/>
                 <Route path="/admin/dashboard" element={<AdminDashboard />}/>
+                <Route path="/admin/categories" element={<AdminCategories />}/>
                 <Route path="/access-forbidden" element={<AccessForbidden />}/>
                 <Route path="*" element={<ErrorPage />}/>
             </Routes>
