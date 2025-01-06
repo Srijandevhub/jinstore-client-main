@@ -13,6 +13,7 @@ const Header = () => {
 
     const cart = useSelector((state) => state.cart.data);
     const wishlist = useSelector((state) => state.wishlist.data);
+    const user = useSelector((state) => state.user.data);
 
     const handleLocationChange = (value) => {
         setLocation(value);
