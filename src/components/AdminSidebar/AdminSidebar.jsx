@@ -24,7 +24,7 @@ const AdminSidebar = ({ active, menuActive }) => {
                         </Link>
                     </li>
                     <li className={styles.sidebarList}>
-                        <Link to="/admin/categories" className={`${styles.sidebarLink} ${menuActive === 'banners' ? `${styles.active}` : ''}`}>
+                        <Link to="/admin/banners" className={`${styles.sidebarLink} ${menuActive === 'banners' ? `${styles.active}` : ''}`}>
                             <i className="fa-solid fa-user"></i>
                             <span className={styles.linkText}>Banners</span>
                         </Link>

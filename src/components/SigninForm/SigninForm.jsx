@@ -5,8 +5,6 @@ import FormCheck from '../FormGroups/FormCheck';
 import { Link, useNavigate } from 'react-router-dom';
 import { Flip, toast } from 'react-toastify';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { addUser } from '../../utils/userSlice';
 const SigninForm = () => {
     const [identifier, setIdentifier] = useState("");
     const [password, setPassword] = useState("");
@@ -16,7 +14,6 @@ const SigninForm = () => {
     const passwordRef = useRef(null);
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
     const onSubmit = async () => {
         try {
             if (!identifier.trim()) {
@@ -28,9 +25,8 @@ const SigninForm = () => {
             }
 
             const res = await axios.post("http://localhost:5000/api/v1/user/login-user", { identifier: identifier, password: password, rememberme: rememberme }, { withCredentials: true });
-
+            console.log(res);
             if (res.status === 200) {
-                dispatch(addUser(res.data.user));
                 navigate("/");
             }
 
