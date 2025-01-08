@@ -14,7 +14,10 @@ const SigninForm = () => {
     const passwordRef = useRef(null);
 
     const navigate = useNavigate();
+<<<<<<< HEAD
 
+=======
+>>>>>>> Srijan
     const onSubmit = async () => {
         try {
             if (!identifier.trim()) {
@@ -28,10 +31,15 @@ const SigninForm = () => {
             if (localStorage.getItem("wishlistproducts")) {
                 wishlist = JSON.parse(localStorage.getItem("wishlistproducts"));
 
+<<<<<<< HEAD
             }
 
             const res = await axios.post("http://localhost:5000/api/v1/user/login-user", { identifier: identifier, password: password, rememberme: rememberme, wishlist: JSON.stringify(wishlist), cart: "" }, { withCredentials: true });
 
+=======
+            const res = await axios.post("http://localhost:5000/api/v1/user/login-user", { identifier: identifier, password: password, rememberme: rememberme }, { withCredentials: true });
+            console.log(res);
+>>>>>>> Srijan
             if (res.status === 200) {
                 navigate("/");
                 localStorage.removeItem("wishlistproducts");
