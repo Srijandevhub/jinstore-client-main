@@ -11,8 +11,24 @@ import BannerImg from '../../assets/banner.jpg'
 import BannerImg2 from '../../assets/banner2.jpg'
 
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const Banner = () => {
+    const [banners, setBanners] = useState([]);
+    useEffect(() => {
+        const fetchBanners = async () => {
+            try {
+                const res = await axios.get("http://localhost:5000/api/v1/banner/get-banners");
+                if (res.status === 200) {
+                    setBanners(res.data.banners);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchBanners();
+    }, [])
     return (
         <Swiper 
             pagination={{
@@ -30,36 +46,27 @@ const Banner = () => {
             modules={[Pagination, Autoplay, EffectFade]}
             className={styles.bannerWrapper}
         >
-            <SwiperSlide>
-                <div className={styles.bannerBox}>
-                    <img src={BannerImg} alt='banner' className={styles.bannerImage}/>
-                    <div className={styles.bannerContent}>
-                        <div className={styles.bannerContainer}>
-                            <div className={styles.banerCol}>
-                                <span className={styles.tag}>Weekend Discount</span>
-                                <strong className={styles.bannerHeading}>Shopping with us for better quality and the best price</strong>
-                                <p className={styles.bannerText}>We have prepared special discounts for you on grocery products. Don't miss these opportunities...</p>
-                                <Link to="/shop" className={styles.bannerBtn}>Shop Now</Link>
+            {
+                banners.map((item, index) => {
+                    return (
+                        <SwiperSlide key={index}>
+                            <div className={styles.bannerBox}>
+                                <img src={`http://localhost:5000/uploads/banners/${item.image}`} alt='banner' className={styles.bannerImage}/>
+                                <div className={styles.bannerContent}>
+                                    <div className={styles.bannerContainer}>
+                                        <div className={styles.banerCol}>
+                                            <span className={styles.tag}>Weekend Discount</span>
+                                            <strong className={styles.bannerHeading}>{item.heading}</strong>
+                                            <p className={styles.bannerText}>{item.description}</p>
+                                            <Link to={item.slug} className={styles.bannerBtn}>Shop Now</Link>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </SwiperSlide>
-            <SwiperSlide>
-                <div className={styles.bannerBox}>
-                    <img src={BannerImg2} alt='banner' className={styles.bannerImage}/>
-                    <div className={styles.bannerContent}>
-                        <div className={styles.bannerContainer}>
-                            <div className={styles.banerCol}>
-                                <span className={styles.tag}>Weekend Discount</span>
-                                <strong className={styles.bannerHeading}>The one supermarket that makes your life easy and better</strong>
-                                <p className={styles.bannerText}>We have prepared special discounts for you on grocery products. Don't miss these opportunities...</p>
-                                <Link to="/shop" className={styles.bannerBtn}>Shop Now</Link>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </SwiperSlide>
+                        </SwiperSlide>
+                    )
+                })
+            }
         </Swiper>
     )
 }

@@ -6,13 +6,10 @@ import SignupPage from "./pages/SignupPage"
 import AdminDashboard from "./pages/AdminDashboard"
 import AccessForbidden from "./pages/AccessForbidden"
 import AdminCategories from "./pages/AdminCategories"
-<<<<<<< HEAD
 import AdminBrands from "./pages/AdminBrands"
 import AdminProducts from "./pages/AdminProducts"
 import WishlistPage from "./pages/WishlistPage"
-=======
 import AdminBanner from "./pages/AdminBanner"
->>>>>>> Srijan
 
 const App = () => {
     return (
@@ -24,12 +21,9 @@ const App = () => {
                 <Route path="/wishlist" element={<WishlistPage />}/>
                 <Route path="/admin/dashboard" element={<AdminDashboard />}/>
                 <Route path="/admin/categories" element={<AdminCategories />}/>
-<<<<<<< HEAD
                 <Route path="/admin/brands" element={<AdminBrands />}/>
                 <Route path="/admin/products" element={<AdminProducts />}/>
-=======
                 <Route path="/admin/banners" element={<AdminBanner />}/>
->>>>>>> Srijan
                 <Route path="/access-forbidden" element={<AccessForbidden />}/>
                 <Route path="*" element={<ErrorPage />}/>
             </Routes>

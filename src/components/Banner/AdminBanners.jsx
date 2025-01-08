@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import FormControl from '../FormGroups/FormControl'
 import styles from './AdminBanners.module.css'
 import FileControl from '../FormGroups/FileControl';
@@ -11,6 +11,7 @@ const AdminBanners = () => {
     const [text, setText] = useState("");
     const [slug, setSlug] = useState("");
     const [banners, setBanners] = useState([]);
+    const [refresh, setRefresh] = useState(false);
     const handleAddBanner = async () => {
         try {
             const formData = new FormData();
@@ -35,6 +36,7 @@ const AdminBanners = () => {
                 setText("");
                 setImage(null);
                 setSlug("");
+                setRefresh(!refresh);
             }
         } catch (error) {
             if (error.response.status === 400) {
@@ -58,6 +60,29 @@ const AdminBanners = () => {
             }
         }
     }
+    const handleDeleteBanner = async (id) => {
+        try {
+            const res = await axios.delete(`http://localhost:5000/api/v1/banner/delete-banner/${id}`, { withCredentials: true });
+            if (res.status === 200) {
+                setRefresh(!refresh);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        const fetchBanners = async () => {
+            try {
+                const res = await axios.get("http://localhost:5000/api/v1/banner/get-banners");
+                if (res.status === 200) {
+                    setBanners(res.data.banners);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchBanners();
+    }, [refresh])
     return (
         <div className={styles.wrapper}>
             <div className='row'>
@@ -95,13 +120,13 @@ const AdminBanners = () => {
                                 <tr key={index}>
                                     <td>{index + 1}</td>
                                     <td>
-                                        <img src={`http://localhost:5000/uploads/banner/${item.image}`} alt="banner"/>
+                                        <img src={`http://localhost:5000/uploads/banners/${item.image}`} alt="banner"/>
                                     </td>
                                     <td>{item.heading}</td>
                                     <td>{item.text}</td>
                                     <td>{item.slug}</td>
                                     <td>
-                                        <button className='btn btn-danger'>Delete</button>
+                                        <button className='btn btn-danger' onClick={() => handleDeleteBanner(item._id)}>Delete</button>
                                     </td>
                                 </tr>
                             )
