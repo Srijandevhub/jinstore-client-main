@@ -24,11 +24,17 @@ const SigninForm = () => {
             if (!password.trim()) {
                 password.current.focus();
             }
+            let wishlist;
+            if (localStorage.getItem("wishlistproducts")) {
+                wishlist = JSON.parse(localStorage.getItem("wishlistproducts"));
 
-            const res = await axios.post("http://localhost:5000/api/v1/user/login-user", { identifier: identifier, password: password, rememberme: rememberme }, { withCredentials: true });
+            }
+
+            const res = await axios.post("http://localhost:5000/api/v1/user/login-user", { identifier: identifier, password: password, rememberme: rememberme, wishlist: JSON.stringify(wishlist), cart: "" }, { withCredentials: true });
 
             if (res.status === 200) {
                 navigate("/");
+                localStorage.removeItem("wishlistproducts");
             }
 
         } catch (error) {

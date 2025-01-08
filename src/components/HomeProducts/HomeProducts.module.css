@@ -10,6 +10,8 @@
 .row {
     display: flex;
     flex-wrap: wrap;
+    border-right: 1px solid #E5E7EB;
+    border-bottom: 1px solid #E5E7EB;
 }
 .col {
     flex: 0 0 auto;

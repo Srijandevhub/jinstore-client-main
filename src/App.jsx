@@ -8,6 +8,7 @@ import AccessForbidden from "./pages/AccessForbidden"
 import AdminCategories from "./pages/AdminCategories"
 import AdminBrands from "./pages/AdminBrands"
 import AdminProducts from "./pages/AdminProducts"
+import WishlistPage from "./pages/WishlistPage"
 
 const App = () => {
     return (
@@ -16,6 +17,7 @@ const App = () => {
                 <Route path="/" element={<HomePage />}/>
                 <Route path="/signin" element={<SigninPage />}/>
                 <Route path="/signup" element={<SignupPage />}/>
+                <Route path="/wishlist" element={<WishlistPage />}/>
                 <Route path="/admin/dashboard" element={<AdminDashboard />}/>
                 <Route path="/admin/categories" element={<AdminCategories />}/>
                 <Route path="/admin/brands" element={<AdminBrands />}/>

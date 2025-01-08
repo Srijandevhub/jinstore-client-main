@@ -44,8 +44,13 @@ const SignupForm = () => {
                 });
                 return;
             }
+            let wishlist;
+            if (localStorage.getItem("wishlistproducts")) {
+                wishlist = JSON.parse(localStorage.getItem("wishlistproducts"));
 
-            const res = await axios.post("http://localhost:5000/api/v1/user/register-user", { username, email, password });
+            }
+
+            const res = await axios.post("http://localhost:5000/api/v1/user/register-user", { username, email, password, wishlist: JSON.stringify(wishlist) });
             
             if (res.status === 200) {
                 navigate("/signin");

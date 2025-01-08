@@ -6,6 +6,7 @@ import LocationModal from '../LocationModal/LocationModal'
 import { useDispatch, useSelector } from 'react-redux'
 import AccountLoader from '../Loaders/AccountLoader'
 import { logoutUser } from '../../utils/userSlice'
+import { clearWishlistSync } from '../../utils/wishlistSlice'
 const Header = () => {
     const [backdrop, setBackdrop] = useState(false);
     const [showModal, setShowModal] = useState(false);
@@ -144,6 +145,7 @@ const Header = () => {
                                         <button className={styles.accountLink} onClick={(e) => {
                                             e.preventDefault();
                                             dispatch(logoutUser());
+                                            dispatch(clearWishlistSync());
                                         }}>Logout</button>
                                     </div>
                                 </div>
