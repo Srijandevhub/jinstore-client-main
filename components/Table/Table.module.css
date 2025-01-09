@@ -1,0 +1,23 @@
+.tableResponsive {
+    width: 100%;
+    overflow-x: auto;
+    margin: 10px 0;
+}
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.table thead th {
+    text-align: left;
+    background-color: #eee;
+    padding: 12px;
+}
+.table tbody td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    white-space: nowrap;
+}
+.table td img {
+    max-width: 80px;
+}
