@@ -1,0 +1,63 @@
+.productTableWrapper {
+    overflow-x: auto;
+}
+.productTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+.productTable th {
+    vertical-align: middle;
+    padding: .5rem .5rem;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-align: left;
+}
+.productTable td img {
+    max-width: 102px;
+}
+.productTable td {
+    vertical-align: middle;
+    padding: .5rem .5rem;
+    white-space: nowrap;
+    border-bottom: 1px solid #e5e7eb;
+}
+.productTitle {
+    font-size: 14px;
+    color: #030303;
+    font-weight: 600;
+    display: inline-block;
+    max-width: 258px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.cartBtn {
+    background-color: #634c9f;
+    border: none;
+    outline: none;
+    display: inline-flex;
+    min-height: 42px;
+    min-width: 110px;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: 0.3s ease-in-out;
+    padding: 0 12px;
+}
+.cartBtn:hover {
+    opacity: 0.9;
+}
+.removeBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}

@@ -42,7 +42,6 @@ const Banner = () => {
             fadeEffect={{
                 crossFade: true
             }}
-            loop={true}
             modules={[Pagination, Autoplay, EffectFade]}
             className={styles.bannerWrapper}
         >
