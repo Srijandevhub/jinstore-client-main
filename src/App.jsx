@@ -10,6 +10,7 @@ import AdminBrands from "./pages/AdminBrands"
 import AdminProducts from "./pages/AdminProducts"
 import WishlistPage from "./pages/WishlistPage"
 import AdminBanner from "./pages/AdminBanner"
+import CartPage from "./pages/CartPage"
 
 const App = () => {
     return (
@@ -19,6 +20,7 @@ const App = () => {
                 <Route path="/signin" element={<SigninPage />}/>
                 <Route path="/signup" element={<SignupPage />}/>
                 <Route path="/wishlist" element={<WishlistPage />}/>
+                <Route path="/cart" element={<CartPage />}/>
                 <Route path="/admin/dashboard" element={<AdminDashboard />}/>
                 <Route path="/admin/categories" element={<AdminCategories />}/>
                 <Route path="/admin/brands" element={<AdminBrands />}/>

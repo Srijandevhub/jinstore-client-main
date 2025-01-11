@@ -10,7 +10,7 @@ export const fetchUser = createAsyncThunk("fetchUser/data", async (_, thunkAPI) 
         }
     } catch (error) {
         if (error.response.status === 400 || error.response.status === 500 || error.response.status === 403) {
-            thunkAPI.dispatch(clearWishlistSync());
+            //thunkAPI.dispatch(clearWishlistSync());
             return thunkAPI.rejectWithValue(error.response.data.message);
         }
     }

@@ -4,6 +4,7 @@ import Header from "../components/Header/Header"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchUser } from "../utils/userSlice"
 import { loadWishlistAsync, syncWishlistFromLocalStorage } from "../utils/wishlistSlice"
+import { fetchCart, loadCartSync } from "../utils/cartSlice"
 
 const Layout = ({ children }) => {
     const dispatch = useDispatch();
@@ -14,8 +15,10 @@ const Layout = ({ children }) => {
     useEffect(() => {
         if (!user) {
             dispatch(syncWishlistFromLocalStorage());
+            dispatch(loadCartSync());
         } else {
             dispatch(loadWishlistAsync());
+            dispatch(fetchCart());
         }
     }, [user])
     return (

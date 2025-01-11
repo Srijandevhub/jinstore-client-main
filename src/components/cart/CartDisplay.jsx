@@ -2,41 +2,15 @@ import { useEffect, useState } from 'react';
 import styles from './Cart.module.css';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 import QuantityBox from './QuantityBox';
-import { getTotalPrice, removeCartItemsFromLocalStorage } from '../../utils/cartSlice';
 
 const CartDisplay = () => {
     const dispatch = useDispatch();
     const [products, setProducts] = useState([]);
-    const cartIds = useSelector((state) => state.cart.cart).map((item) => item.productid);
-    const [refresh, setRefresh] = useState(false);
-    const cart = useSelector((state) => state.cart.cart);
-    const totalPrice = useSelector((state) => state.cart.totalPrice);
-    const handleRemoveItem = (id) => {
-        dispatch(removeCartItemsFromLocalStorage(id));
-        setRefresh(!refresh);
-    }
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const res = await axios.post("http://localhost:5000/api/v3/products/getproductsfromids", {
-                    ids: cartIds || []
-                });
-                if (res.status === 200) {
-                    setProducts(res.data.products);
-                }
-            } catch (error) {
-                if (error.status === 400 || error.status === 500) {
-                    console.log(error.message);
-                }
-            }
-        }
-        fetchProducts();
-        dispatch(getTotalPrice());
-    }, [refresh])
+    
+    const cart = useSelector((state) => state.cart.data);
 
-    if (products.length === 0) {
+    if (products.length === 0 && cart.length === 0) {
         return (
             <div className='py-5'>
                 <div className='container'>
@@ -48,7 +22,7 @@ const CartDisplay = () => {
                         </div>
                         <h4 className='text-center mt-5'>Cart Is Empty</h4>
                         <div className='d-flex justify-content-center'>
-                            <Link to="/" className="btn btn-dark">Return to shop</Link>
+                            <Link to="/" className="btn btn-primary">Return to shop</Link>
                         </div>
                     </div>
                 </div>

@@ -2,47 +2,148 @@ import styles from './Wishlist.module.css';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearWishlistSync, removeProductFromWishlistSync, syncWishlistToLocalStorage } from '../../utils/wishlistSlice';
+import { Flip, toast } from 'react-toastify';
 
 const WishlistDisplay = () => {
-    const [refresh, setRefresh] = useState(false);
     const [products, setProducts] = useState([]);
 
     const user = useSelector((state) => state.user.data);
     const wishlist = useSelector((state) => state.wishlist.data);
-    
+    const dispatch = useDispatch();
+
+    const removeProductFromWishlist = async (productid) => {
+        try {
+            const res = await axios.post("http://localhost:5000/api/v1/wishlist/delete-product", {
+                productid: productid
+            }, { withCredentials: true });
+            if (res.status === 200) {
+                toast.success(res.data.message, {
+                    position: 'top-right',
+                    transition: Flip,
+                    autoClose: 3000,
+                    pauseOnHover: false,
+                    progress: false,
+                    hideProgressBar: true
+                });
+                dispatch(removeProductFromWishlistSync(productid));
+                fetchWishlistsFromAuth();
+            }
+        } catch (error) {
+            if (error.response.status === 400) {
+                toast.warning(error.response.data.message, {
+                    position: 'top-right',
+                    transition: Flip,
+                    autoClose: 3000,
+                    pauseOnHover: false,
+                    progress: false,
+                    hideProgressBar: true
+                });
+            } else {
+                toast.error(error.response.data.message, {
+                    position: 'top-right',
+                    transition: Flip,
+                    autoClose: 3000,
+                    pauseOnHover: false,
+                    progress: false,
+                    hideProgressBar: true
+                });
+            }
+        }
+    }
+
+    const handleRemoveProduct = (productid) => {
+        if (user) {
+            removeProductFromWishlist(productid);
+        } else {
+            dispatch(removeProductFromWishlistSync(productid));
+            dispatch(syncWishlistToLocalStorage());
+            fetchWishlistFromNonAuth();
+        }
+    }
+
+    const fetchWishlistsFromAuth = async () => {
+        try {
+            const res = await axios.get("http://localhost:5000/api/v1/wishlist/wishlist-details", { withCredentials: true });
+            if (res.status === 200) {
+                setProducts(res.data.wishlist);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const fetchWishlistFromNonAuth = async () => {
+        try {
+            const listids = localStorage.getItem("wishlistproducts") ? JSON.parse(localStorage.getItem("wishlistproducts")) : [];
+            const res = await axios.post("http://localhost:5000/api/v1/wishlist/wishlist-details", {
+                ids: JSON.stringify(listids)
+            }, { withCredentials: true });
+            if (res.status === 200) {
+                setProducts(res.data.wishlist);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const clearWishlistAsync = async () => {
+        try {
+            const res = await axios.post("http://localhost:5000/api/v1/wishlist/clear-wishlist", { }, {
+                withCredentials: true
+            });
+            if (res.status === 200) {
+                toast.success(res.data.message, {
+                    position: 'top-right',
+                    transition: Flip,
+                    autoClose: 3000,
+                    pauseOnHover: false,
+                    progress: false,
+                    hideProgressBar: true
+                });
+                fetchWishlistsFromAuth();
+            }
+        } catch (error) {
+            if (error.response.status === 400) {
+                toast.warning(error.response.data.message, {
+                    position: 'top-right',
+                    transition: Flip,
+                    autoClose: 3000,
+                    pauseOnHover: false,
+                    progress: false,
+                    hideProgressBar: true
+                });
+            } else {
+                toast.error(error.response.data.message, {
+                    position: 'top-right',
+                    transition: Flip,
+                    autoClose: 3000,
+                    pauseOnHover: false,
+                    progress: false,
+                    hideProgressBar: true
+                });
+            }
+        }
+    }
+
+    const clearWishlist = () => {
+        if (user) {
+            clearWishlistAsync();
+        } else {
+            dispatch(clearWishlistSync());
+            fetchWishlistFromNonAuth();
+        }
+    }
+
     useEffect(() => {
-        const fetchWishlistsFromAuth = async () => {
-            try {
-                const res = await axios.get("http://localhost:5000/api/v1/wishlist/wishlist-details", { withCredentials: true });
-                if (res.status === 200) {
-                    setProducts(res.data.wishlist);
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        const fetchWishlistFromNonAuth = async () => {
-            try {
-                const listids = localStorage.getItem("wishlistproducts") ? JSON.parse(localStorage.getItem("wishlistproducts")) : [];
-                const res = await axios.post("http://localhost:5000/api/v1/wishlist/wishlist-details", {
-                    ids: JSON.stringify(listids)
-                }, { withCredentials: true });
-                if (res.status === 200) {
-                    setProducts(res.data.wishlist);
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        }
         if (user) {
             fetchWishlistsFromAuth();
         } else {
             fetchWishlistFromNonAuth();
         }
-    }, [refresh]);
+    }, [user]);
 
-    if (products.length === 0 || wishlist.length === 0) {
+    if (products.length === 0 && wishlist.length === 0) {
         return (
             <div className='py-5'>
                 <div className='container'>
@@ -85,7 +186,7 @@ const WishlistDisplay = () => {
                                                 <img src={`http://localhost:5000/uploads/products/${item.thumbnail}`} alt={item.title}/>
                                             </td>
                                             <td>
-                                                <Link to={`/product/${item._id}`} className={styles.productTitle}>{item.title}</Link>
+                                                <Link to={`/product/${item.productid}`} className={styles.productTitle}>{item.title}</Link>
                                             </td>
                                             <td>
                                                 {
@@ -104,10 +205,10 @@ const WishlistDisplay = () => {
                                                 }
                                                 </>
 
-                                                : <Link to={`/product/${item._id}`} className={styles.cartBtn}>Read More</Link>}
+                                                : <Link to={`/product/${item.productid}`} className={styles.cartBtn}>Read More</Link>}
                                             </td>
                                             <td>
-                                                <button className={styles.removeBtn} aria-label='remove'>
+                                                <button className={styles.removeBtn} aria-label='remove' onClick={() => handleRemoveProduct(item.productid)}>
                                                     <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24">
                                                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18 17.94 6M18 18 6.06 6"/>
                                                     </svg>
@@ -121,8 +222,8 @@ const WishlistDisplay = () => {
                     </table>
                 </div>
                 <div className='d-flex mt-5 justify-content-end gap-2'>
-                    <button className='btn btn-primary-bordered'>Clear All</button>
-                    <Link to="/shop" className='btn btn-primary'>Continue to shop</Link>
+                    <button className='btn btn-primary-bordered' onClick={() => clearWishlist()}>Clear All</button>
+                    <Link to="/shop" className='btn btn-primary-bordered'>Continue to shop</Link>
                 </div>
             </div>
         </div>

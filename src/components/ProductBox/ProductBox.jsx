@@ -1,23 +1,117 @@
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './ProductBox.module.css'
 import { Link } from 'react-router-dom'
-import { addProductToWishlist, addProductToWishlistSync, removeProductFromWishlist, removeProductFromWishlistSync } from '../../utils/wishlistSlice';
+import { addProductToWishlistSync, removeProductFromWishlistSync, syncWishlistToLocalStorage } from '../../utils/wishlistSlice';
+import { Flip, toast } from 'react-toastify';
+import axios from 'axios';
+import { addProductToCartSync, syncCartToLocalStorage } from '../../utils/cartSlice';
 const ProductBox = ({ product }) => {
     const user = useSelector((state) => state.user.data);
     const wishlist = useSelector((state) => state.wishlist.data);
+    const cart = useSelector((state) => state.cart.data).map(item => item.productid);
     const dispatch = useDispatch();
+
+    const addProductToWishlist = async (productid) => {
+        try {
+            const res = await axios.post("http://localhost:5000/api/v1/wishlist/add-product", {
+                productid: productid
+            }, { withCredentials: true });
+            if (res.status === 200) {
+                toast.success(res.data.message, {
+                    position: 'top-right',
+                    transition: Flip,
+                    autoClose: 3000,
+                    pauseOnHover: false,
+                    progress: false,
+                    hideProgressBar: true
+                });
+                dispatch(addProductToWishlistSync(productid));
+            }
+        } catch (error) {
+            if (error.response.status === 400) {
+                toast.warning(error.response.data.message, {
+                    position: 'top-right',
+                    transition: Flip,
+                    autoClose: 3000,
+                    pauseOnHover: false,
+                    progress: false,
+                    hideProgressBar: true
+                });
+            } else {
+                toast.error(error.response.data.message, {
+                    position: 'top-right',
+                    transition: Flip,
+                    autoClose: 3000,
+                    pauseOnHover: false,
+                    progress: false,
+                    hideProgressBar: true
+                });
+            }
+        }
+    }
+    
+    const removeProductFromWishlist = async (productid) => {
+        try {
+            const res = await axios.post("http://localhost:5000/api/v1/wishlist/delete-product", {
+                productid: productid
+            }, { withCredentials: true });
+            if (res.status === 200) {
+                toast.success(res.data.message, {
+                    position: 'top-right',
+                    transition: Flip,
+                    autoClose: 3000,
+                    pauseOnHover: false,
+                    progress: false,
+                    hideProgressBar: true
+                });
+                dispatch(removeProductFromWishlistSync(productid));
+            }
+        } catch (error) {
+            if (error.response.status === 400) {
+                toast.warning(error.response.data.message, {
+                    position: 'top-right',
+                    transition: Flip,
+                    autoClose: 3000,
+                    pauseOnHover: false,
+                    progress: false,
+                    hideProgressBar: true
+                });
+            } else {
+                toast.error(error.response.data.message, {
+                    position: 'top-right',
+                    transition: Flip,
+                    autoClose: 3000,
+                    pauseOnHover: false,
+                    progress: false,
+                    hideProgressBar: true
+                });
+            }
+        }
+    }
+
     const handleAddProductToWishlist = (id) => {
         if (!user) {
             dispatch(addProductToWishlistSync(id));
+            dispatch(syncWishlistToLocalStorage());
         } else {
-            dispatch(addProductToWishlist(id));
+            addProductToWishlist(id);
         }
     }
     const handleRemoveProductFromWishlist = (id) => {
         if (!user) {
             dispatch(removeProductFromWishlistSync(id));
+            dispatch(syncWishlistToLocalStorage());
         } else {
-            dispatch(removeProductFromWishlist(id));
+            removeProductFromWishlist(id);
+        }
+    }
+
+    const handleAddProductToCart = (id) => {
+        if (user) {
+
+        } else {
+            dispatch(addProductToCartSync({ productid: id, quantity: 1 }));
+            dispatch(syncCartToLocalStorage());
         }
     }
     return (
@@ -42,12 +136,19 @@ const ProductBox = ({ product }) => {
                 </div>
             </div>
             <div className={styles.productFooter}>
-                <button className={styles.cartBtn}>
-                    <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"/>
-                    </svg>
-                    Add To Cart
-                </button>
+                {
+                    cart.includes(product._id) ?
+                    <button className={styles.cartBtn}>
+                        Remove From Cart
+                    </button>
+                    :
+                    <button className={styles.cartBtn} onClick={() => handleAddProductToCart(product._id)}>
+                        <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"/>
+                        </svg>
+                        Add To Cart
+                    </button>
+                }
                 {
                     wishlist.includes(product._id) ?
                     <button className={`${styles.cartBtn} ${styles.wishlist}`} onClick={() => handleRemoveProductFromWishlist(product._id)}>

@@ -24,6 +24,38 @@ body {
 .swiper-pagination-bullet-active {
     background-color: #634C9F;
 }
+.container {
+    max-width: 1400px;
+    padding: 0 20px;
+    margin: 0 auto;
+}
+.py-5 {
+    padding: 3rem 0 !important;
+}
+.py-3 {
+    padding: 2rem 0 !important;
+}
+.d-flex {
+    display: flex !important;
+}
+.flex-column {
+    flex-direction: column;
+}
+.justify-content-center {
+    justify-content: center;
+}
+.text-center {
+    text-align: center !important;
+}
+.mt-5 {
+    margin-top: 3rem !important;
+}
+.justify-content-end {
+    justify-content: flex-end;
+}
+.gap-2 {
+    gap: 20px;
+}
 @media only sreen and (max-width: 575px) {
     body {
         font-size: 14px;
