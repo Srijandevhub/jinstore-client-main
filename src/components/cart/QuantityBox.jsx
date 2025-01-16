@@ -1,17 +1,16 @@
 import styles from './Quanitybox.module.css';
-import { useDispatch } from 'react-redux';
 
-const QuantityBox = ({ value, itemid }) => {
-    const dispath = useDispatch();
+const QuantityBox = ({ value, updateQuantity, itemid }) => {
     return (
         <div className={styles.quantityWrapper}>
             <button className={styles.btn} onClick={() => {
-                
+                updateQuantity(Math.max(--value, 1), itemid);
             }}>
                 -
             </button>
             <span className={styles.display}>{value}</span>
             <button className={styles.btn} onClick={() => {
+                updateQuantity(++value, itemid);
             }}>
                 +
             </button>

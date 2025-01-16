@@ -5,7 +5,7 @@ export const fetchCart = createAsyncThunk("data/fetchCart", async (_, thunkAPI) 
     try {
         const res = await axios.get("http://localhost:5000/api/v1/cart/get-cart", { withCredentials: true });
         if (res.status === 200) {
-            return res.data.cart;
+            return res.data.cart.products;
         }        
     } catch (error) {
         return thunkAPI.rejectWithValue(error.message);
@@ -25,7 +25,7 @@ const cartSlice = createSlice({
             state.data.push({ productid: productid, quantity: quantity });
         },
         removeProductFromCartSync: (state, action) => {
-            const filteredState = state.data.filter(prd => prd !== action.payload);
+            const filteredState = state.data.filter(prd => prd.productid !== action.payload);
             state.data = filteredState;
         },
         clearCartSync: (state) => {

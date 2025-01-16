@@ -168,6 +168,9 @@
     padding: 0;
     list-style-type: none;
 }
+.widgetText {
+    padding-bottom: 1rem !important;
+}
 @media only screen and (max-width: 1199px) {
     .footerBottomCol2, .footerBottomCol1 {
         width: 25%;

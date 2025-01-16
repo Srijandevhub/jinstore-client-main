@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { addProductToWishlistSync, removeProductFromWishlistSync, syncWishlistToLocalStorage } from '../../utils/wishlistSlice';
 import { Flip, toast } from 'react-toastify';
 import axios from 'axios';
-import { addProductToCartSync, syncCartToLocalStorage } from '../../utils/cartSlice';
+import { addProductToCartSync, removeProductFromCartSync, syncCartToLocalStorage } from '../../utils/cartSlice';
 const ProductBox = ({ product }) => {
     const user = useSelector((state) => state.user.data);
     const wishlist = useSelector((state) => state.wishlist.data);
@@ -106,11 +106,99 @@ const ProductBox = ({ product }) => {
         }
     }
 
+    const addProductToCart = async (productid) => {
+        try {
+            const res = await axios.post("http://localhost:5000/api/v1/cart/add-product", {
+                productid: productid
+            }, { withCredentials: true });
+            if (res.status === 200) {
+                if (res.status === 200) {
+                    toast.success(res.data.message, {
+                        position: 'top-right',
+                        transition: Flip,
+                        autoClose: 3000,
+                        pauseOnHover: false,
+                        progress: false,
+                        hideProgressBar: true
+                    });
+                    dispatch(addProductToCartSync({ productid: productid, quantity: 1 }));
+                }
+            }
+        } catch (error) {
+            if (error.response.status === 400) {
+                toast.warning(error.response.data.message, {
+                    position: 'top-right',
+                    transition: Flip,
+                    autoClose: 3000,
+                    pauseOnHover: false,
+                    progress: false,
+                    hideProgressBar: true
+                });
+            } else {
+                toast.error(error.response.data.message, {
+                    position: 'top-right',
+                    transition: Flip,
+                    autoClose: 3000,
+                    pauseOnHover: false,
+                    progress: false,
+                    hideProgressBar: true
+                });
+            }
+        }
+    }
+
     const handleAddProductToCart = (id) => {
         if (user) {
-
+            addProductToCart(id);
         } else {
             dispatch(addProductToCartSync({ productid: id, quantity: 1 }));
+            dispatch(syncCartToLocalStorage());
+        }
+    }
+
+    const removeProductFromCart = async (id) => {
+        try {
+            const res = await axios.post("http://localhost:5000/api/v1/cart/remove-product", {
+                productid: id
+            }, { withCredentials: true });
+            if (res.status === 200) {
+                toast.success(res.data.message, {
+                    position: 'top-right',
+                    transition: Flip,
+                    autoClose: 3000,
+                    pauseOnHover: false,
+                    progress: false,
+                    hideProgressBar: true
+                });
+                dispatch(removeProductFromCartSync(id));
+            }
+        } catch (error) {
+            if (error.response.status === 400) {
+                toast.warning(error.response.data.message, {
+                    position: 'top-right',
+                    transition: Flip,
+                    autoClose: 3000,
+                    pauseOnHover: false,
+                    progress: false,
+                    hideProgressBar: true
+                });
+            } else {
+                toast.error(error.response.data.message, {
+                    position: 'top-right',
+                    transition: Flip,
+                    autoClose: 3000,
+                    pauseOnHover: false,
+                    progress: false,
+                    hideProgressBar: true
+                });
+            }
+        }
+    } 
+    const handleRemoveProduct = (id) => {
+        if (user) {
+            removeProductFromCart(id);
+        } else {
+            dispatch(removeProductFromCartSync(id));
             dispatch(syncCartToLocalStorage());
         }
     }
@@ -138,7 +226,7 @@ const ProductBox = ({ product }) => {
             <div className={styles.productFooter}>
                 {
                     cart.includes(product._id) ?
-                    <button className={styles.cartBtn}>
+                    <button className={styles.cartBtn} onClick={() => handleRemoveProduct(product._id)}>
                         Remove From Cart
                     </button>
                     :

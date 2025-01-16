@@ -33,7 +33,6 @@ const wishlistSlice = createSlice({
             state.data = filteredList;
         },
         clearWishlistSync: (state) => {
-            console.log("Wishlist clear triggered");
             state.data = [];
             localStorage.removeItem("wishlistproducts")
         },

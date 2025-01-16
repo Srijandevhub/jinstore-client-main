@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import AccountLoader from '../Loaders/AccountLoader'
 import { logoutUser } from '../../utils/userSlice'
 import { clearWishlistSync } from '../../utils/wishlistSlice'
+import { clearCartSync } from '../../utils/cartSlice'
 const Header = () => {
     const [backdrop, setBackdrop] = useState(false);
     const [showModal, setShowModal] = useState(false);
@@ -146,6 +147,7 @@ const Header = () => {
                                             e.preventDefault();
                                             dispatch(logoutUser());
                                             dispatch(clearWishlistSync());
+                                            dispatch(clearCartSync());
                                         }}>Logout</button>
                                     </div>
                                 </div>
