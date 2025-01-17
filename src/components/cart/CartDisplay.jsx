@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
 import styles from './Cart.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import QuantityBox from './QuantityBox';
 import axios from 'axios';
-import { removeProductFromCartSync, syncCartToLocalStorage } from '../../utils/cartSlice';
+import { removeProductFromCartSync, syncCartToLocalStorage, updateQuantityToCartSync } from '../../utils/cartSlice';
 import { Flip, toast } from 'react-toastify';
 
 const CartDisplay = () => {
     const dispatch = useDispatch();
     const [products, setProducts] = useState([]);
     const [grandTotal, setGrandTotal] = useState(0);
+    const navigate = useNavigate();
     
     const cart = useSelector((state) => state.cart.data);
     const user = useSelector((state) => state.user.data);
@@ -109,6 +110,18 @@ const CartDisplay = () => {
     const updateQuantity = (qty, id) => {
         if (user) {
             updateQuantityOfCart(qty, id);
+        } else {
+            dispatch(updateQuantityToCartSync({ productid: id, quantity: qty }));
+            dispatch(syncCartToLocalStorage());
+            fetchCartFromNonAuth();
+        }
+    }
+
+    const handleCheckout = () => {
+        if (user) {
+
+        } else {
+            navigate("/signin");
         }
     }
 
@@ -143,7 +156,7 @@ const CartDisplay = () => {
         <div className='py-5' style={{ minHeight: "394px" }}>
             <div className='container'>
                 <div className='row'>
-                    <div className='col-xxl-9'>
+                    <div className='col-lg-9'>
                         <div className={styles.productTableWrapper}>
                             <table className={styles.productTable}>
                                 <thead>
@@ -184,7 +197,7 @@ const CartDisplay = () => {
                                                     </td>
                                                     <td>
                                                         {
-                                                            item.discount > 0 ? `₹${(item.price  - (item.price * (item.discount / 100))) * item.quantity}` : `₹${item.price * item.quantity}`
+                                                            item.discount > 0 ? `₹${((item.price  - (item.price * (item.discount / 100))) * item.quantity).toFixed(2)}` : `₹${(item.price * item.quantity).toFixed(2)}`
                                                         }
                                                     </td>
                                                 </tr>
@@ -198,24 +211,14 @@ const CartDisplay = () => {
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>Grand Total</td>
+                                        <td>Item Total</td>
                                         <td>₹{grandTotal}</td>
-                                    </tr>
+                                    </tr>                                    
                                 </tfoot>
                             </table>
                         </div>
                     </div>
-                    
-                </div>
-            </div>
-        </div>
-    )
-}
-
-export default CartDisplay;
-
-
-{/* <div className='col-xxl-3'>
+                    <div className='col-lg-3'>
                         <div className='card'>
                             <div className='card-header'>
                                 <h6 className='mb-0'>Cart Total</h6>
@@ -226,11 +229,40 @@ export default CartDisplay;
                                         <tr>
                                             <td>Subtotal</td>
                                             <td>:</td>
-                                            <td>₹{totalPrice}</td>
+                                            <td>₹{grandTotal}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Delevery</td>
+                                            <td>:</td>
+                                            <td>₹30</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Handling Charges</td>
+                                            <td>:</td>
+                                            <td>₹1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tax</td>
+                                            <td>:</td>
+                                            <td>₹{(grandTotal * (18 / 100)).toFixed(2)}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total</td>
+                                            <td>:</td>
+                                            <td>₹{(parseFloat(grandTotal) + 30 + 1 + (grandTotal * (18 / 100))).toFixed(2)}</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <button className='btn btn-dark mt-3 w-100'>Checkout</button>
-                    </div> */}
+                        <button className='btn btn-primary mt-3 w-100' onClick={() => handleCheckout()}>Checkout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default CartDisplay;
+
+

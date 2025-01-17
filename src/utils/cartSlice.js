@@ -32,6 +32,10 @@ const cartSlice = createSlice({
             state.data = [];
             localStorage.removeItem("cartproducts");
         },
+        updateQuantityToCartSync: (state, action) => {
+            const { productid, quantity } = action.payload;
+            state.data.find(item => item.productid === productid).quantity = quantity;
+        },
         loadCartSync: (state) => {
             if (localStorage.getItem("cartproducts")) {
                 state.data = JSON.parse(localStorage.getItem("cartproducts"));
@@ -54,5 +58,5 @@ const cartSlice = createSlice({
     }
 })
 
-export const { addProductToCartSync, removeProductFromCartSync, clearCartSync, loadCartSync, syncCartToLocalStorage } = cartSlice.actions;
+export const { addProductToCartSync, removeProductFromCartSync, clearCartSync, loadCartSync, syncCartToLocalStorage, updateQuantityToCartSync } = cartSlice.actions;
 export default cartSlice.reducer
